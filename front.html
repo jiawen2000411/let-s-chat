@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ChatGPT</title>
+  </head>
+  <body>
+    <h1>ChatGPT</h1>
+    <div>
+      <label for="user-input">You:</label>
+      <input type="text" id="user-input" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div>
+      <label for="bot-output">ChatGPT:</label>
+      <p id="bot-output"></p>
+    </div>
+
+    <script>
+      async function sendMessage() {
+        const message = document.getElementById("user-input").value;
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        });
+        const { output } = await response.json();
+        document.getElementById("bot-output").textContent = output;
+      }
+    </script>
+  </body>
+</html>
